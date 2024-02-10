@@ -27,7 +27,7 @@ products.forEach((product) => {
     <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
 
     <div class="product-quantity-container">
-      <select>
+      <select class="js-select-quantity-${product.id}">
         <option selected value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -67,12 +67,16 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((btn) => {
       }
     });
 
+    const productQuantity = Number(
+      document.querySelector(`.js-select-quantity-${productId}`).value
+    );
+
     if (machingItem) {
-      machingItem.quantity += 1;
+      machingItem.quantity += productQuantity;
     } else {
       cart.push({
         productId: productId,
-        quantity: 1,
+        quantity: productQuantity,
       });
     }
 
@@ -81,6 +85,6 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((btn) => {
       cartQuantity += item.quantity;
     });
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-    console.log(cartQuantity);
+    console.log(cart);
   });
 });
